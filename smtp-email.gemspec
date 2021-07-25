@@ -18,6 +18,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'evt-log'
   spec.add_runtime_dependency 'evt-settings'
+  spec.add_runtime_dependency 'evt-telemetry'
 
   spec.add_development_dependency 'test_bench'
 end
