@@ -1,5 +1,7 @@
 module SMTP
   class Email
+    include Log::Dependency
+
     def self.build
       instance = new
       instance
@@ -19,10 +21,14 @@ module SMTP
         :port => 1025
       }
 
+      logger.trace(tag: :delivery_method) { "Building delivery method... (Settings: #{settings})" }
+
       mail.delivery_method(
         :smtp,
         settings
       )
+
+      logger.trace { "Sending email... (To: #{to}, From: #{from}, Subject: #{subject})" }
 
       mail.to = to
       mail.from = from
@@ -30,6 +36,8 @@ module SMTP
       mail.body = body
 
       mail.deliver
+
+      logger.debug { "Sent email. (To: #{to}, From: #{from}, Subject: #{subject})" }
     end
   end
 end

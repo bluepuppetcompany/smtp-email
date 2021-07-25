@@ -16,5 +16,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'mail'
 
+  spec.add_runtime_dependency 'evt-log'
+
   spec.add_development_dependency 'test_bench'
 end
