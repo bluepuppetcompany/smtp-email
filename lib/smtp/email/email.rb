@@ -1,15 +1,21 @@
 module SMTP
   class Email
     include Log::Dependency
+    include Settings::Setting
 
-    def self.build
+    setting :address
+    setting :port
+
+    def self.build(settings: nil)
       instance = new
+      settings ||= Settings.instance
+      settings.set(instance)
       instance
     end
 
-    def self.configure(receiver, attr_name: nil)
+    def self.configure(receiver, settings: nil, attr_name: nil)
       attr_name ||= :smtp_email
-      instance = build
+      instance = build(settings: settings)
       receiver.public_send("#{attr_name}=", instance)
     end
 
@@ -17,8 +23,8 @@ module SMTP
       mail = Mail.new
 
       settings = {
-        :address => "localhost",
-        :port => 1025
+        :address => address,
+        :port => port
       }
 
       logger.trace(tag: :delivery_method) { "Building delivery method... (Settings: #{settings})" }

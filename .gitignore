@@ -2,3 +2,4 @@
 Gemfile.lock
 *.gem
 gems
+settings/smtp_email.json
